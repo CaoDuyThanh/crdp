@@ -30,3 +30,13 @@
 *.exe
 *.out
 *.app
+
+# Build
+build
+
+# Others
+.vscode
+*.egg-info
+dist
+venv
+.idea
