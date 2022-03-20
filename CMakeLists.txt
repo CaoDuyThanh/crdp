@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.0.0)
 
 # Project
 set(PROJECT_NAME crdp)
-set(PROJECT_SRC main.cpp src/rdp.cpp src/rdp.h)
+set(PROJECT_SRC pyrdp.cpp src/rdp.cpp src/rdp.h)
 project(${PROJECT_NAME} VERSION 1.0.0)
 
 set(PYBIND11_VERSION 2.9.1)
