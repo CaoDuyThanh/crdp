@@ -1,5 +1,4 @@
 import unittest
-from crdp import rdp
 
 
 class AdvanceTest(unittest.TestCase):
