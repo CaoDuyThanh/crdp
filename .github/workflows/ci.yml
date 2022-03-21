@@ -1,0 +1,43 @@
+name: CI
+
+on: [push]
+
+jobs:
+  coding-standard-c:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Code convention
+        run: find . -type f -name "*.py" | xargs python -m pylint
+
+  coding-standard-py:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Install module
+        run: python setup.py install
+      - name: Code convention
+        run: find . -type f -name "*.py" | xargs python -m pylint
+
+  unit-testing:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: Install module
+        run: python setup.py install
+      - name: Run unit tests source
+        run: python -m unittest tests
