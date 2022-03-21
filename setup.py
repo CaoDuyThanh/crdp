@@ -60,12 +60,12 @@ class CMakeBuild(build_ext):
             # 3.15+.
             if not cmake_generator:
                 try:
+                    # pylint: disable=import-outside-toplevel, unused-import
+                    import ninja
                     cmake_args += ["-GNinja"]
                 except ImportError:
                     pass
-
         else:
-
             # Single config generators are handled "normally"
             single_config = any(x in cmake_generator for x in ["NMake", "Ninja"])
 
