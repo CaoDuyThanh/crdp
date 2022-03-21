@@ -29,7 +29,7 @@ jobs:
       - name: Install module
         run: python setup.py install
       - name: Code convention
-        run: find . -type f -name "*.py" | xargs python -m pylint
+        run: find . -type f -not -path "./build/*" -not -path "./venv/*" -name "*.py" | xargs python -m pylint
 
   unit-testing:
     runs-on: ubuntu-18.04
