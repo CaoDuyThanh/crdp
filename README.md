@@ -1,16 +1,16 @@
-# crdp
+# cxxrdp
 C++ implementation of RDP
 
 ## Install via pip
-Run following command to install crdp on your computer
+Run following command to install cxxrdp on your computer
 
-    pip install crdp
+    pip install cxxrdp
 
 ## How to use?
 
 .. code:: python
 
-    from crdp import rdp
+    from cxxrdp import rdp
 
     rdp([[0, 5], [5, 5], [10, 5], [15, 5]])
 

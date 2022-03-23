@@ -1,5 +1,5 @@
 import unittest
-from crdp import rdp
+from cxxrdp import rdp
 
 
 class SimpleTest(unittest.TestCase):
