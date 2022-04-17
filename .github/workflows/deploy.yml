@@ -1,0 +1,41 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build-package:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.6'
+      - name: Build package
+        run: python3 setup.py build
+
+  push_test_pip:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: action/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.6'
+      - name: Install dependencies to deploy
+        run: pip install twine
+      - name: Deploy to test.pypi
+        run: python3 -m twine upload --repository https://test.pypi.org/simple/cxxrdp dist/*
+
+  push_pip:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.6'
+      - name: Install dependencies to deploy
+        run: pip install twine
+      - name: Deploy to test.pypi
+        run: python3 -m twine upload --repository https://pypi.org/simple/cxxrdp dist/*

@@ -5,6 +5,9 @@ import sys
 from setuptools import Extension, setup
 from setuptools.command.build_ext import build_ext
 
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
+
 # Convert distutils Windows platform specifiers to CMake -A arguments
 PLAT_TO_CMAKE = {
     "win32": "Win32",
@@ -117,9 +120,19 @@ setup(
     author="Thanh Cao",
     author_email="caoduythanhcantho@gmail.com",
     description="C++ implementation of RDP (Ramer–Douglas–Peucker)",
-    long_description="",
+    long_description=long_description,
+    long_description_content_type='text/markdown',
+    url='https://github.com/CaoDuyThanh/crdp',
+    project_urls={
+        "Bug Tracker": "https://github.com/CaoDuyThanh/crdp/issues",
+    },
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Algorithm :: RDP",
+    ],
     ext_modules=[CMakeExtension("src")],
     cmdclass={"build_ext": CMakeBuild},
     zip_safe=False,
-    python_requires=">=3.8",
+    python_requires=">=3.6",
 )
