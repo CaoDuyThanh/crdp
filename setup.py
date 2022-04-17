@@ -116,7 +116,7 @@ class CMakeBuild(build_ext):
 # logic and declaration, and simpler if you include description/version in a file.
 setup(
     name="cxxrdp",
-    version="1.0.0",
+    version="1.0.1",
     author="Thanh Cao",
     author_email="caoduythanhcantho@gmail.com",
     description="C++ implementation of RDP (Ramer–Douglas–Peucker)",
