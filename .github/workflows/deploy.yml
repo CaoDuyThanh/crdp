@@ -15,7 +15,7 @@ jobs:
         with:
           python-version: '3.6'
       - name: Build package
-        run: python3 setup.py build
+        run: python3 setup.py sdist bdist_wheel
       - uses: actions/upload-artifact@v2
         with:
           name: pip-build
@@ -23,6 +23,7 @@ jobs:
 
   push_test_pip:
     environment: production
+    needs: [build-package]
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
@@ -40,6 +41,7 @@ jobs:
 
   push_pip:
     environment: production
+    needs: [build-package]
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
