@@ -40,7 +40,7 @@ jobs:
       - name: Install dependencies to deploy
         run: pip install twine
       - name: Deploy to test.pypi
-        run: echo "$PYPIRC" | base64 -d > .pypirc && python3 -m twine upload --repository testpypi dist/*
+        run: echo ${{ secrets.PYPIRC }} | base64 -d > .pypirc && python3 -m twine upload --repository testpypi dist/*
 
   push_pip:
     environment: production
@@ -58,5 +58,5 @@ jobs:
           path: dist
       - name: Install dependencies to deploy
         run: pip install twine
-      - name: Deploy to test.pypi
-        run: echo "$PYPIRC" | base64 -d > .pypirc && python3 -m twine upload --repository pypi dist/*
+      - name: Deploy to pypi
+        run: echo ${{ secrets.PYPIRC }} | base64 -d > .pypirc && python3 -m twine upload --repository pypi dist/*
