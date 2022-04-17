@@ -16,8 +16,13 @@ jobs:
           python-version: '3.6'
       - name: Build package
         run: python3 setup.py build
+      - uses: actions/upload-artifact@v2
+        with:
+          name: pip-build
+          path: dist
 
   push_test_pip:
+    environment: production
     runs-on: ubuntu-18.04
     steps:
       - uses: action/checkout@v2
@@ -25,12 +30,16 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.6'
+      - uses: actions/download-artifact@v2
+        with:
+          name: pip-build
       - name: Install dependencies to deploy
         run: pip install twine
       - name: Deploy to test.pypi
         run: python3 -m twine upload --repository https://test.pypi.org/simple/cxxrdp dist/*
 
   push_pip:
+    environment: production
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
@@ -38,6 +47,9 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.6'
+      - uses: actions/download-artifact@v2
+        with:
+          name: pip-build
       - name: Install dependencies to deploy
         run: pip install twine
       - name: Deploy to test.pypi
