@@ -127,9 +127,10 @@ setup(
         "Bug Tracker": "https://github.com/CaoDuyThanh/crdp/issues",
     },
     classifiers=[
+        "Development Status :: 2 - Pre-Alpha",
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
-        "Algorithm :: RDP",
+        "Operating System :: OS Independent",
     ],
     ext_modules=[CMakeExtension("src")],
     cmdclass={"build_ext": CMakeBuild},
