@@ -17,13 +17,13 @@ float Line2D::distance(const P2D &p) const {
   return abs(p[0] * a + p[1] * b + c) / sqrtAB;
 }
 
-inline MaxPos findMax(std::vector<P2D> &points, Line2D line, bool same_point,
+inline MaxPos findMax(std::vector<P2D> &points, Line2D line, bool samePoint,
                       P2D startPoint, uint32_t startIdx, uint32_t endIdx) {
   float maxDist = 0;
   uint32_t maxIdx = startIdx;
   for (uint32_t i = startIdx; i <= endIdx; i++) {
     float dist = 0.f;
-    if (same_point) {
+    if (samePoint) {
       dist = distance(points[i], startPoint);
     } else {
       dist = line.distance(points[i]);
@@ -45,9 +45,9 @@ void rdpRecursive(std::vector<P2D> &points, std::vector<bool> &isActive,
   float maxDist = 0;
   uint32_t maxIdx = startIdx;
   const Line2D line = Line2D::solveLine(points[startIdx], points[endIdx]);
-  const bool same_point = distance(points[startIdx], points[endIdx]) < 1e-8;
+  const bool samePoint = distance(points[startIdx], points[endIdx]) < 1e-8;
   if (endIdx - startIdx - 1 <= maxPointPerThread) {
-    MaxPos maxPos = findMax(points, line, same_point, points[startIdx],
+    MaxPos maxPos = findMax(points, line, samePoint, points[startIdx],
                             startIdx + 1, endIdx - 1);
     if (maxPos.first > maxDist) {
       maxDist = maxPos.first;
@@ -59,7 +59,7 @@ void rdpRecursive(std::vector<P2D> &points, std::vector<bool> &isActive,
     std::vector<std::future<MaxPos>> results;
     for (uint32_t thread = 0; thread < numThread; thread++) {
       results.push_back(threadPool.enqueue(
-          &findMax, std::ref(points), line, same_point, points[startIdx],
+          &findMax, std::ref(points), line, samePoint, points[startIdx],
           thread * maxPointPerThread + startIdx + 1,
           std::min<uint32_t>((thread + 1) * maxPointPerThread + startIdx + 1,
                              endIdx - 1)));
@@ -88,16 +88,16 @@ std::vector<P2D> rdp(std::vector<P2D> points, float epsilon, uint8_t maxThread,
     return result;
   }
 
-  std::vector<bool> is_active;
-  is_active.resize(points.size());
-  std::fill(is_active.begin(), is_active.end(), false);
-  is_active[0] = is_active[points.size() - 1] = true;
+  std::vector<bool> isActive;
+  isActive.resize(points.size());
+  std::fill(isActive.begin(), isActive.end(), false);
+  isActive[0] = isActive[points.size() - 1] = true;
   ThreadPool threadPool(maxThread);
-  rdpRecursive(points, is_active, 0, points.size() - 1, epsilon, threadPool,
+  rdpRecursive(points, isActive, 0, points.size() - 1, epsilon, threadPool,
                maxPointPerThread);
 
   for (uint32_t i = 0; i < points.size(); i++) {
-    if (is_active[i]) {
+    if (isActive[i]) {
       result.push_back(points[i]);
     }
   }
